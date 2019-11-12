@@ -1,6 +1,6 @@
 [![Slalom][logo]](https://slalom.com)
 
-# terraform-gcp-cloudfunction [![Build Status](https://api.travis-ci.com/JamesWoolfenden/terraform-gcp-bastion.svg?branch=master)](https://travis-ci.com/JamesWoolfenden/terraform-gcp-bastion) [![Latest Release](https://img.shields.io/github/release/JamesWoolfenden/terraform-gcp-cloudfunction.svg)](https://github.com/JamesWoolfenden/terraform-gcp-cloudfunction/releases/latest)
+# terraform-gcp-cloudfunction [![Build Status](https://api.travis-ci.com/JamesWoolfenden/terraform-gcp-cloudfunction.svg?branch=master)](https://travis-ci.com/JamesWoolfenden/terraform-gcp-cloudfunction) [![Latest Release](https://img.shields.io/github/release/JamesWoolfenden/terraform-gcp-cloudfunction.svg)](https://github.com/JamesWoolfenden/terraform-gcp-cloudfunction/releases/latest)
 
 The working cloudfunction module and example.
 
@@ -9,15 +9,18 @@ The working cloudfunction module and example.
 Add **module.cloudfunction.tf** to your code:-
 
 ```terraform
-{
-    source      ="jameswoolfenden/cloudfunction/gcp"
-    version     = "0.0.4"
-    common_tags = var.common_tags
-    project     = var.project
-    app         = var.app
-    sourcezip   = var.sourcezip
+module cloudfunction {
+    source        ="jameswoolfenden/cloudfunction/gcp"
+    version       = "0.0.4"
+    common_tags   = var.common_tags
+    lambda        = var.lambda
+    project       = var.project
+    region        = var.region
+    sourcezippath = var.sourcezippath
 }
 ```
+
+See **main.auto.tfvars** for the data to drive the module.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
