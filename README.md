@@ -1,6 +1,6 @@
 [![Slalom][logo]](https://slalom.com)
 
-# terraform-gcp-cloudfunction [![Build Status](https://api.travis-ci.com/JamesWoolfenden/terraform-gcp-cloudfunction.svg?branch=master)](https://travis-ci.com/JamesWoolfenden/terraform-gcp-cloudfunction) [![Latest Release](https://img.shields.io/github/release/JamesWoolfenden/terraform-gcp-cloudfunction.svg)](https://github.com/JamesWoolfenden/terraform-gcp-cloudfunction/releases/latest)
+# terraform-gcp-cloudfunction [![Build Status](https://github.com/JamesWoolfenden/terraform-gcp-cloudfunction/workflows/Bump%20version/badge.svg?branch=master)](https://github.com/JamesWoolfenden/terraform-gcp-cloudfunction/actions) [![Latest Release](https://img.shields.io/github/release/JamesWoolfenden/terraform-gcp-cloudfunction.svg)](https://github.com/JamesWoolfenden/terraform-gcp-cloudfunction/releases/latest)
 
 The working cloudfunction module and example.
 
