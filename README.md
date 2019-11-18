@@ -28,8 +28,8 @@ See **main.auto.tfvars** for the data to drive the module.
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | common\_tags | This is to help you add tags to your cloud objects | map | n/a | yes |
-| lambda |  | map | n/a | yes |
-| project |  | string | n/a | yes |
+| lambda | A map object that populates the majority of cloudfunction settings | map | n/a | yes |
+| project | GCP project | string | n/a | yes |
 | region | GCP region | string | n/a | yes |
 | sourcezippath | Full path to source zip file | string | n/a | yes |
 
@@ -37,7 +37,7 @@ See **main.auto.tfvars** for the data to drive the module.
 
 | Name | Description |
 |------|-------------|
-| function | Required for to publish Modules |
+| function |  |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

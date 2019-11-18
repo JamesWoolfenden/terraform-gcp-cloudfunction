@@ -4,11 +4,13 @@ variable "common_tags" {
 }
 
 variable "lambda" {
-  type = map
+  description = "A map object that populates the majority of cloudfunction settings"
+  type        = map
 }
 
 variable "project" {
-  type = string
+  description = "GCP project"
+  type        = string
 }
 
 variable "region" {
