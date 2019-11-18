@@ -8,14 +8,12 @@ variable "lambda" {
 }
 
 variable "project" {
-  type    = string
-  default = "examplea"
+  type = string
 }
 
 variable "region" {
   type        = string
   description = "GCP region"
-  default     = "us-central1"
 }
 
 variable "sourcezippath" {

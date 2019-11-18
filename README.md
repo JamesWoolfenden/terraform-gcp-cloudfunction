@@ -29,9 +29,15 @@ See **main.auto.tfvars** for the data to drive the module.
 |------|-------------|:----:|:-----:|:-----:|
 | common\_tags | This is to help you add tags to your cloud objects | map | n/a | yes |
 | lambda |  | map | n/a | yes |
-| project |  | string | `"examplea"` | no |
-| region | GCP region | string | `"us-central1"` | no |
+| project |  | string | n/a | yes |
+| region | GCP region | string | n/a | yes |
 | sourcezippath | Full path to source zip file | string | n/a | yes |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| function | Required for to publish Modules |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

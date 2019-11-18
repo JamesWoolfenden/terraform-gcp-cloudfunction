@@ -1,3 +1,3 @@
 output "function" {
-    value=module.function.function
+  value = module.function.function
 }
