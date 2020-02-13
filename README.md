@@ -20,24 +20,31 @@ module cloudfunction {
 }
 ```
 
-See **main.auto.tfvars** for the data to drive the module.
+See **examplea.auto.tfvars** for the data to drive the module.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Providers
+
+| Name | Version |
+|------|---------|
+| google | n/a |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| common\_tags | This is to help you add tags to your cloud objects | map | n/a | yes |
-| lambda | A map object that populates the majority of cloudfunction settings | map | n/a | yes |
-| project | GCP project | string | n/a | yes |
-| region | GCP region | string | n/a | yes |
-| sourcezippath | Full path to source zip file | string | n/a | yes |
+|------|-------------|------|---------|:-----:|
+| common\_tags | This is to help you add tags to your cloud objects | `map` | n/a | yes |
+| lambda | A map object that populates the majority of cloudfunction settings | `map` | n/a | yes |
+| project | GCP project | `string` | n/a | yes |
+| region | GCP region | `string` | n/a | yes |
+| sourcezippath | Full path to source zip file | `string` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| function |  |
+| bucket | n/a |
+| function | n/a |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
@@ -59,7 +66,7 @@ Please use the [issue tracker](https://github.com/jameswoolfenden/terraform-gcp-
 
 ## Copyrights
 
-Copyright � 2019-2019 [Slalom, LLC](https://slalom.com)
+Copyright © 2019-2020 [Slalom, LLC](https://slalom.com)
 
 ## License
 

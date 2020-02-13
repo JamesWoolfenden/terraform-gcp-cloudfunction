@@ -4,8 +4,8 @@ resource google_cloudfunctions_function lambda {
   entry_point           = var.lambda["entry_point"]
   environment_variables = {}
 
-  source_archive_bucket = "${google_storage_bucket.bucket.name}"
-  source_archive_object = "${google_storage_bucket_object.archive.name}"
+  source_archive_bucket = google_storage_bucket.bucket.name
+  source_archive_object = google_storage_bucket_object.archive.name
 
   labels = {
     "deployment-tool" = "console-cloud"
