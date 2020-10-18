@@ -1,4 +1,4 @@
 provider "google" {
-  version = "~>3.41"
   project = var.project
+  version = "3.43.0"
 }
