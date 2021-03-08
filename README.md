@@ -36,12 +36,24 @@ No requirements.
 |------|---------|
 | google | n/a |
 
+## Modules
+
+No Modules.
+
+## Resources
+
+| Name |
+|------|
+| [google_cloudfunctions_function](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloudfunctions_function) |
+| [google_storage_bucket](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket) |
+| [google_storage_bucket_object](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket_object) |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| common\_tags | This is to help you add tags to your cloud objects | `map` | n/a | yes |
-| lambda | A map object that populates the majority of cloudfunction settings | `map` | n/a | yes |
+| common\_tags | This is to help you add tags to your cloud objects | `map(any)` | n/a | yes |
+| lambda | A map object that populates the majority of cloudfunction settings | `map(any)` | n/a | yes |
 | project | GCP project | `string` | n/a | yes |
 | region | GCP region | `string` | n/a | yes |
 | sourcezippath | Full path to source zip file | `string` | n/a | yes |
@@ -52,7 +64,6 @@ No requirements.
 |------|-------------|
 | bucket | n/a |
 | function | n/a |
-
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 Check out these related projects.
