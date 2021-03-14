@@ -1,5 +1,6 @@
 common_tags = {
-"createdby" = "Terraform" }
+  createdby = "Terraform"
+module = "terraform-gcp-cloudfunction" }
 
 
 lambda = {

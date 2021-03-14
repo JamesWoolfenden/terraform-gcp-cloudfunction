@@ -28,5 +28,4 @@ resource "google_cloudfunctions_function" "lambda" {
   }
 
   timeouts {}
-
 }
