@@ -22,3 +22,8 @@ variable "sourcezippath" {
   type        = string
   description = "Full path to source zip file "
 }
+
+variable "location" {
+  type    = string
+  default = "eu"
+}
