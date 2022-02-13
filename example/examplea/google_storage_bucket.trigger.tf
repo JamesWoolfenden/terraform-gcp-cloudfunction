@@ -3,4 +3,7 @@ resource "google_storage_bucket" "trigger" {
   name                        = "examplea-function-1"
   uniform_bucket_level_access = true
   location                    = "eu"
+  versioning {
+    enabled = true
+  }
 }
