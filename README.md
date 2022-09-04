@@ -86,6 +86,14 @@ resource "google_project_iam_custom_role" "terraformXVlBzgba" {
   title       = "terraformXVlBzgba"
   description = "A user with least privileges"
   permissions = [
+    "cloudfunctions.functions.create",
+    "cloudfunctions.functions.delete",
+    "cloudfunctions.functions.get",
+    "cloudfunctions.functions.getIamPolicy",
+    "cloudfunctions.functions.setIamPolicy",
+    "cloudfunctions.functions.update",
+    "cloudfunctions.operations.get",
+    "iam.serviceAccounts.actAs",
     "storage.buckets.create",
     "storage.buckets.delete",
     "storage.buckets.get",
