@@ -50,6 +50,7 @@ No modules.
 | Name | Type |
 |------|------|
 | [google_cloudfunctions_function.lambda](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloudfunctions_function) | resource |
+| [google_cloudfunctions_function_iam_member.invoker](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloudfunctions_function_iam_member) | resource |
 | [google_storage_bucket.bucket](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket) | resource |
 | [google_storage_bucket_object.archive](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket_object) | resource |
 
@@ -58,6 +59,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_common_tags"></a> [common\_tags](#input\_common\_tags) | This is to help you add tags to your cloud objects | `map(any)` | n/a | yes |
+| <a name="input_invoker"></a> [invoker](#input\_invoker) | Set who can invoke the lambda | `string` | `"allUsers"` | no |
 | <a name="input_lambda"></a> [lambda](#input\_lambda) | A map object that populates the majority of cloudfunction settings | `map(any)` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | n/a | `string` | `"eu"` | no |
 | <a name="input_project"></a> [project](#input\_project) | GCP project | `string` | n/a | yes |
