@@ -9,7 +9,7 @@ variable "lambda" {
 }
 variable "project" {
   type    = string
-  default = "pike"
+  default = "pike-361314"
 }
 
 variable "region" {
