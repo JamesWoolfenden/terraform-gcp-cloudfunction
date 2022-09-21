@@ -59,7 +59,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_common_tags"></a> [common\_tags](#input\_common\_tags) | This is to help you add tags to your cloud objects | `map(any)` | n/a | yes |
-| <a name="input_invoker"></a> [invoker](#input\_invoker) | Set who can invoke the lambda | `string` | `"allUsers"` | no |
+| <a name="input_invoker"></a> [invoker](#input\_invoker) | Set who can invoke the lambda | `any` | n/a | yes |
 | <a name="input_lambda"></a> [lambda](#input\_lambda) | A map object that populates the majority of cloudfunction settings | `map(any)` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | n/a | `string` | `"eu"` | no |
 | <a name="input_project"></a> [project](#input\_project) | GCP project | `string` | n/a | yes |
@@ -80,10 +80,11 @@ No modules.
 The Terraform resource required is:
 
 ```golang
-resource "google_project_iam_custom_role" "terraformXVlBzgba" {
-  project     = "examplea"
+
+resource "google_project_iam_custom_role" "terraform_pike" {
+  project     = "pike"
   role_id     = "terraform_pike"
-  title       = "terraformXVlBzgba"
+  title       = "terraform_pike"
   description = "A user with least privileges"
   permissions = [
     "cloudfunctions.functions.create",
@@ -103,6 +104,7 @@ resource "google_project_iam_custom_role" "terraformXVlBzgba" {
     "storage.objects.get"
   ]
 }
+
 
 ```
 <!-- END OF PRE-COMMIT-PIKE DOCS HOOK -->

@@ -11,5 +11,4 @@ resource "google_cloudfunctions_function_iam_member" "invoker" {
 
 variable "invoker" {
   description = "Set who can invoke the lambda"
-  default     = "allUsers"
 }

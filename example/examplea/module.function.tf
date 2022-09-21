@@ -5,4 +5,5 @@ module "function" {
   project       = var.project
   region        = var.region
   sourcezippath = var.sourcezippath
+  invoker       = "user:jameswoolfenden@gmail.com"
 }
