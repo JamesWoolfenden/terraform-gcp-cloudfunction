@@ -10,7 +10,8 @@ resource "google_cloudfunctions_function" "lambda" {
   labels = {
     "deployment-tool" = "console-cloud"
   }
-
+ 
+  https_trigger_security_level = "SECURE_ALWAYS"
   max_instances         = 0
   name                  = var.lambda["name"]
   project               = var.project
