@@ -50,7 +50,7 @@ repos:
     hooks:
       - id: pike-docs-go
         args: ["readme","-d", ".", "-i"]
--   repo: 'https://github.com/rhysd/actionlint'
+  - repo: 'https://github.com/rhysd/actionlint'
     rev: 914e7df21a07ef503a81201c76d2b11c789d3fca
     hooks:
       - id: actionlint
