@@ -12,6 +12,7 @@ resource "google_cloudfunctions_function" "lambda" {
   }
 
   https_trigger_security_level = "SECURE_ALWAYS"
+  ingress_settings             = try(var.lambda["ingress_settings"], "ALLOW_INTERNAL_AND_GCLB")
   max_instances                = 0
   name                         = var.lambda["name"]
   project                      = var.project
