@@ -1,0 +1,23 @@
+id: HLD_PROPOSED_007
+name: Cloud Functions 1st gen (google_cloudfunctions_function) is deprecated — migrate to v2
+principle: patch-management
+severity: HIGH
+rationale: |
+  Google announced the deprecation of Cloud Functions 1st gen in 2024.
+  Individual runtimes have staggered end-of-support dates; several Node.js,
+  Python, and Go runtimes are already past end-of-support. The
+  google_cloudfunctions_function resource type itself will eventually be
+  discontinued. 2nd gen (google_cloudfunctions2_function) runs on Cloud Run,
+  receives all new features, and has a stronger security posture.
+remediation: |
+  Migrate from google_cloudfunctions_function to google_cloudfunctions2_function.
+  Key differences: wrap service config in a service_config block, replace
+  vpc_connector with service_config.vpc_connector, replace kms_key_name with
+  service_config.environment_variables, and replace event_trigger.resource
+  with event_trigger.event_filters blocks.
+requires_dsl_extension: true
+# DSL extension needed: a 'deprecated: true' or 'forbidden_resource_type: true'
+# top-level key that causes holden to FAIL on any instance of the resource type.
+# Cannot be expressed with current attribute-level operators.
+resources:
+  google_cloudfunctions_function: {}

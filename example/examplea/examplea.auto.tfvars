@@ -1,8 +1,3 @@
-common_tags = {
-  createdby = "Terraform"
-module = "terraform-gcp-cloudfunction" }
-
-
 lambda = {
   available_memory_mb    = 256
   name                   = "cloud_storage_function-3"
