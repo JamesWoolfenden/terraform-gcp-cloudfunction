@@ -1,0 +1,64 @@
+{
+  "findings": [
+    {
+      "confidence": "high",
+      "explanation": "Three variables are referenced by module resources but not declared in variables.tf. google_storage_bucket.bucket uses var.kms_key_name (encryption) and var.logging_bucket (logging); google_cloudfunctions_function_iam_member.invoker uses var.invoker. All three cause 'An input variable with the name X has not been declared' at terraform plan. HLD_GCP_001 fires as a symptom (kms_key_name resolves to null), but the root cause is the missing declarations.",
+      "file": "variables.tf",
+      "id": "HOLDEN_AI_001",
+      "line": 1,
+      "principle": "repeatability",
+      "related_resources": [
+        "google_cloudfunctions_function_iam_member.invoker"
+      ],
+      "remediation": "Add kms_key_name, logging_bucket, and invoker variable declarations to variables.tf, each with a not-empty validation. Pass kms_key_name and logging_bucket from the example.",
+      "resource": "google_storage_bucket.bucket",
+      "severity": "HIGH",
+      "title": "Module variables.tf missing kms_key_name, logging_bucket, and invoker declarations \u2014 terraform plan fails"
+    },
+    {
+      "confidence": "high",
+      "explanation": "Google announced in 2024 that Cloud Functions 1st gen (google_cloudfunctions_function) would be deprecated and eventually discontinued. Individual runtimes have staggered EOL dates, with several already past end-of-support. Cloud Functions 2nd gen (google_cloudfunctions2_function) runs on Cloud Run, receives all new features, and has a stronger security posture (VPC egress, CMEK, binary authorization). Continuing to use the v1 resource means the function will lose support without migration. holden has no rule on the v1 resource type being deprecated.",
+      "file": "google_cloudfunctions_function.lambda.tf",
+      "id": "HOLDEN_AI_002",
+      "line": 1,
+      "principle": "patch-management",
+      "related_resources": [],
+      "remediation": "Migrate to google_cloudfunctions2_function, following the pattern in the sibling terraform-gcp-cloudfunction2 module. The v2 resource uses a service_config block for VPC connector, kms_key_name, service_account_email, and ingress_settings.",
+      "resource": "google_cloudfunctions_function.lambda",
+      "severity": "HIGH",
+      "title": "google_cloudfunctions_function (v1) is deprecated \u2014 Google has announced end-of-life for Cloud Functions 1st gen"
+    },
+    {
+      "confidence": "high",
+      "explanation": "In Cloud Functions v1, max_instances = 0 means no upper limit on concurrent instances. Under a traffic spike or misconfigured trigger, the function can spin up thousands of instances, exhausting per-project quotas, generating unbounded egress costs, or cascading overload to downstream services. No holden policy checks for a non-zero max_instances on Cloud Functions. A defensive cap (e.g. 100) allows normal scaling while preventing runaway behaviour.",
+      "file": "google_cloudfunctions_function.lambda.tf",
+      "id": "HOLDEN_AI_003",
+      "line": 12,
+      "principle": "reliability",
+      "related_resources": [],
+      "remediation": "Replace max_instances = 0 with a variable var.max_instances defaulting to a safe cap (e.g. 100) and expose it from the module.",
+      "resource": "google_cloudfunctions_function.lambda",
+      "severity": "MEDIUM",
+      "title": "max_instances = 0 allows unbounded scaling \u2014 can exhaust quotas and cause unexpected cost spikes"
+    },
+    {
+      "confidence": "high",
+      "explanation": "member = var.invoker is passed directly to the IAM binding with no validation. If a caller passes invoker = \"allUsers\", HLD_GCP_085 cannot fire because it checks the static value of the member attribute, which is a variable reference. The comment on the resource even says 'IAM entry for all users', suggesting this was the original intent. ingress_settings defaults to ALLOW_INTERNAL_AND_GCLB which reduces but does not eliminate exposure \u2014 allUsers + ALLOW_INTERNAL_AND_GCLB allows invocation from any GCP load balancer or internal service.",
+      "file": "google_cloudfunctions_function_iam_member.invoker.tf",
+      "id": "HOLDEN_AI_004",
+      "line": 8,
+      "principle": "identity-and-access",
+      "related_resources": [],
+      "remediation": "Add a validation to var.invoker rejecting allUsers and allAuthenticatedUsers, or remove the variable and require the caller to manage IAM bindings outside the module.",
+      "resource": "google_cloudfunctions_function_iam_member.invoker",
+      "severity": "MEDIUM",
+      "title": "var.invoker has no validation blocking allUsers \u2014 function could be made publicly invocable without authentication"
+    }
+  ],
+  "suggested_policies": [
+    {
+      "rationale": "google_cloudfunctions_function (v1) has no holden rule requiring a non-zero max_instances. Setting max_instances = 0 means unlimited concurrent instances, which can exhaust per-project quotas and cause unbounded cost under traffic spikes or misconfigured Pub/Sub push triggers. A policy requiring max_instances >= 1 ensures operators have consciously set a cap. The same argument applies to google_cloudfunctions2_function but that resource defaults to 100, so v1 is the higher-risk case.",
+      "yaml": "id: HLD_PROPOSED_006\nname: Cloud Functions must set a non-zero max_instances limit\nprinciple: reliability\nseverity: MEDIUM\nrationale: |\n  In Cloud Functions v1, max_instances = 0 means no upper bound on concurrent\n  instances. A misconfigured trigger or traffic spike can create thousands of\n  instances, exhaust per-project quotas, generate unbounded costs, or cascade\n  overload to downstream services. Requiring max_instances >= 1 ensures the\n  operator has consciously set a cap rather than accepting the unlimited default.\nremediation: |\n  Set max_instances to a non-zero positive integer:\n  ```hcl\n  resource \"google_cloudfunctions_function\" \"example\" {\n    max_instances = 100\n  }\n  ```\nresources:\n  google_cloudfunctions_function:\n    path: max_instances\n    gte: 1\n"
+    }
+  ]
+}

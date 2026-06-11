@@ -48,27 +48,31 @@ No modules.
 | ---- | ---- |
 | [google_cloudfunctions_function.lambda](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloudfunctions_function) | resource |
 | [google_cloudfunctions_function_iam_member.invoker](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloudfunctions_function_iam_member) | resource |
-| [google_storage_bucket.bucket](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket) | resource |
+| [google_storage_bucket.code](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket) | resource |
 | [google_storage_bucket_object.archive](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket_object) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 | ---- | ----------- | ---- | ------- | :------: |
-| <a name="input_common_tags"></a> [common\_tags](#input\_common\_tags) | This is to help you add tags to your cloud objects | `map(any)` | n/a | yes |
-| <a name="input_invoker"></a> [invoker](#input\_invoker) | Set who can invoke the lambda | `any` | n/a | yes |
+| <a name="input_invoker"></a> [invoker](#input\_invoker) | IAM member to grant roles/cloudfunctions.invoker (e.g. user:alice@example.com or serviceAccount:sa@project.iam.gserviceaccount.com) | `string` | n/a | yes |
+| <a name="input_kms_key_name"></a> [kms\_key\_name](#input\_kms\_key\_name) | Full resource ID of the KMS CryptoKey to use for CMEK on the source bucket and Cloud Function | `string` | n/a | yes |
 | <a name="input_lambda"></a> [lambda](#input\_lambda) | A map object that populates the majority of cloudfunction settings | `map(any)` | n/a | yes |
-| <a name="input_location"></a> [location](#input\_location) | n/a | `string` | `"eu"` | no |
+| <a name="input_location"></a> [location](#input\_location) | Location of the Cloud Function | `string` | `"eu"` | no |
+| <a name="input_logging_bucket"></a> [logging\_bucket](#input\_logging\_bucket) | Name of the GCS bucket to write access logs for the source bucket | `string` | n/a | yes |
+| <a name="input_max_instances"></a> [max\_instances](#input\_max\_instances) | Maximum number of concurrent Cloud Function instances; must be >= 1 to prevent unbounded scaling | `number` | `100` | no |
 | <a name="input_project"></a> [project](#input\_project) | GCP project | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | GCP region | `string` | n/a | yes |
 | <a name="input_sourcezippath"></a> [sourcezippath](#input\_sourcezippath) | Full path to source zip file | `string` | n/a | yes |
+| <a name="input_vpc_connector"></a> [vpc\_connector](#input\_vpc\_connector) | Self-link or id of the Serverless VPC Access connector for egress | `string` | n/a | yes |
+| <a name="input_vpc_connector_egress_settings"></a> [vpc\_connector\_egress\_settings](#input\_vpc\_connector\_egress\_settings) | Egress settings for the VPC connector: ALL\_TRAFFIC or PRIVATE\_RANGES\_ONLY | `string` | `"ALL_TRAFFIC"` | no |
 
 ## Outputs
 
 | Name | Description |
 | ---- | ----------- |
-| <a name="output_bucket"></a> [bucket](#output\_bucket) | n/a |
-| <a name="output_function"></a> [function](#output\_function) | n/a |
+| <a name="output_bucket"></a> [bucket](#output\_bucket) | The google\_storage\_bucket resource used to store the Cloud Function source archive |
+| <a name="output_function"></a> [function](#output\_function) | The google\_cloudfunctions\_function resource, exposing name, https\_trigger\_url, and other attributes |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Role and Permissions

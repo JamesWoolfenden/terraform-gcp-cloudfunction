@@ -1,0 +1,21 @@
+id: HLD_PROPOSED_006
+name: Cloud Functions must set a non-zero max_instances limit
+principle: reliability
+severity: MEDIUM
+rationale: |
+  In Cloud Functions v1, max_instances = 0 means no upper bound on concurrent
+  instances. A misconfigured trigger or traffic spike can create thousands of
+  instances, exhaust per-project quotas, generate unbounded costs, or cascade
+  overload to downstream services. Requiring max_instances >= 1 ensures the
+  operator has consciously set a cap rather than accepting the unlimited default.
+remediation: |
+  Set max_instances to a non-zero positive integer:
+  ```hcl
+  resource "google_cloudfunctions_function" "example" {
+    max_instances = 100
+  }
+  ```
+resources:
+  google_cloudfunctions_function:
+    path: max_instances
+    gte: 1
