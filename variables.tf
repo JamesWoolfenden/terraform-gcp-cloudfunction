@@ -12,7 +12,7 @@ variable "project" {
   description = "GCP project"
   type        = string
   validation {
-    condition     = length(trim(var.project)) > 0
+    condition     = length(trimspace(var.project)) > 0
     error_message = "variable 'project' must be a non-empty string"
   }
 }
@@ -21,7 +21,7 @@ variable "region" {
   type        = string
   description = "GCP region"
   validation {
-    condition     = length(trim(var.region)) > 0
+    condition     = length(trimspace(var.region)) > 0
     error_message = "variable 'region' must be a non-empty string"
   }
 }
@@ -30,7 +30,7 @@ variable "sourcezippath" {
   type        = string
   description = "Full path to source zip file "
   validation {
-    condition     = length(trim(var.sourcezippath)) > 0
+    condition     = length(trimspace(var.sourcezippath)) > 0
     error_message = "variable 'sourcezippath' must be a non-empty string"
   }
 }
@@ -40,7 +40,7 @@ variable "location" {
   description = "Location of the Cloud Function"
   default     = "eu"
   validation {
-    condition     = length(trim(var.location)) > 0
+    condition     = length(trimspace(var.location)) > 0
     error_message = "variable 'location' must be a non-empty string"
   }
 }
@@ -49,7 +49,7 @@ variable "kms_key_name" {
   type        = string
   description = "Full resource ID of the KMS CryptoKey to use for CMEK on the source bucket and Cloud Function"
   validation {
-    condition     = length(trim(var.kms_key_name)) > 0
+    condition     = length(trimspace(var.kms_key_name)) > 0
     error_message = "variable 'kms_key_name' must be a non-empty string"
   }
 }
@@ -58,7 +58,7 @@ variable "logging_bucket" {
   type        = string
   description = "Name of the GCS bucket to write access logs for the source bucket"
   validation {
-    condition     = length(trim(var.logging_bucket)) > 0
+    condition     = length(trimspace(var.logging_bucket)) > 0
     error_message = "variable 'logging_bucket' must be a non-empty string"
   }
 }
@@ -76,7 +76,7 @@ variable "vpc_connector" {
   type        = string
   description = "Self-link or id of the Serverless VPC Access connector for egress"
   validation {
-    condition     = length(trim(var.vpc_connector)) > 0
+    condition     = length(trimspace(var.vpc_connector)) > 0
     error_message = "variable 'vpc_connector' must be a non-empty string"
   }
 }

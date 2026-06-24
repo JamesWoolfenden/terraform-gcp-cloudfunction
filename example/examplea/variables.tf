@@ -11,10 +11,10 @@ variable "lambda" {
 variable "project" {
   description = "GCP project ID where resources will be created"
   type        = string
-  default     = "pike-361314"
+  default     = "pike-477416"
 
   validation {
-    condition     = length(trim(var.project)) > 0
+    condition     = length(trimspace(var.project)) > 0
     error_message = "The project variable must be a non-empty string."
   }
 }
@@ -25,7 +25,7 @@ variable "region" {
   description = "GCP region where resources will be created (for example: \"us-central1\")."
 
   validation {
-    condition     = length(trim(var.region)) > 0
+    condition     = length(trimspace(var.region)) > 0
     error_message = "The region variable must be a non-empty string."
   }
 }
@@ -37,17 +37,7 @@ variable "sourcezippath" {
   default     = "./code/index.zip"
 
   validation {
-    condition     = length(trim(var.sourcezippath)) > 0
+    condition     = length(trimspace(var.sourcezippath)) > 0
     error_message = "The sourcezippath variable must be a non-empty string (for example: \"./code/index.zip\")."
-  }
-}
-
-variable "invoker" {
-  description = "Set who can invoke the function (e.g. \"allUsers\" or \"user:alice@example.com\")"
-  type        = string
-
-  validation {
-    condition     = length(trim(var.invoker)) > 0
-    error_message = "The invoker variable must be a non-empty string (for example: \"allUsers\")."
   }
 }

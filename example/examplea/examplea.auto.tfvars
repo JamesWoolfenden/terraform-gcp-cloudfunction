@@ -6,5 +6,5 @@ lambda = {
   timeout                = 60
   event_trigger_type     = "google.storage.object.finalize"
   event_trigger_resource = "projects/_/buckets/examplea-function-1"
-  service_account_email  = "pike-365@pike-361314.iam.gserviceaccount.com"
+  service_account_email  = "pike-365@pike-477416.iam.gserviceaccount.com"
 }

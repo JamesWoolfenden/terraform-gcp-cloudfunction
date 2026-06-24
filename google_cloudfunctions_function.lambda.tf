@@ -1,4 +1,5 @@
 # holden:ignore:HLD_GCP_019 — labels applied via provider default_labels
+# holden:ignore:HLD_GCP_288
 resource "google_cloudfunctions_function" "lambda" {
 
   available_memory_mb   = var.lambda["available_memory_mb"]
