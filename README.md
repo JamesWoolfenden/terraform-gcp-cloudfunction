@@ -55,7 +55,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 | ---- | ----------- | ---- | ------- | :------: |
-| <a name="input_invoker"></a> [invoker](#input\_invoker) | IAM member to grant roles/cloudfunctions.invoker (e.g. user:alice@example.com or serviceAccount:sa@project.iam.gserviceaccount.com) | `string` | n/a | yes |
+| <a name="input_invoker"></a> [invoker](#input\_invoker) | IAM member to grant roles/cloudfunctions.invoker (e.g. `user:<email>` or `serviceAccount:<service-account-email>`) | `string` | n/a | yes |
 | <a name="input_kms_key_name"></a> [kms\_key\_name](#input\_kms\_key\_name) | Full resource ID of the KMS CryptoKey to use for CMEK on the source bucket and Cloud Function | `string` | n/a | yes |
 | <a name="input_lambda"></a> [lambda](#input\_lambda) | A map object that populates the majority of cloudfunction settings | `map(any)` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | Location of the Cloud Function | `string` | `"eu"` | no |
@@ -81,7 +81,7 @@ No modules.
 The Terraform resource required is:
 
 ```golang
-
+# apply role
 resource "google_project_iam_custom_role" "terraform_pike" {
   project     = "pike-477416"
   role_id     = "terraform_pike"
@@ -102,6 +102,21 @@ resource "google_project_iam_custom_role" "terraform_pike" {
     "storage.objects.create",
     "storage.objects.delete",
     "storage.objects.get",
+    "storage.objects.list"
+  ]
+}
+
+# plan role
+resource "google_project_iam_custom_role" "terraform_pike_plan" {
+  project     = "pike-477416"
+  role_id     = "terraform_pike_plan"
+  title       = "terraform_pike_plan"
+  description = "A user with least privileges"
+  permissions = [
+    "cloudfunctions.functions.get",
+    "cloudfunctions.functions.getIamPolicy",
+    "cloudfunctions.operations.get",
+    "storage.buckets.get",
     "storage.objects.list"
   ]
 }

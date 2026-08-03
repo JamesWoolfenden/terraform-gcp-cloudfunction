@@ -48,6 +48,7 @@ variable "location" {
 variable "kms_key_name" {
   type        = string
   description = "Full resource ID of the KMS CryptoKey to use for CMEK on the source bucket and Cloud Function"
+  sensitive   = true
   validation {
     condition     = length(trimspace(var.kms_key_name)) > 0
     error_message = "variable 'kms_key_name' must be a non-empty string"
@@ -65,7 +66,7 @@ variable "logging_bucket" {
 
 variable "invoker" {
   type        = string
-  description = "IAM member to grant roles/cloudfunctions.invoker (e.g. user:alice@example.com or serviceAccount:sa@project.iam.gserviceaccount.com)"
+  description = "IAM member to grant roles/cloudfunctions.invoker (e.g. `user:<email>` or `serviceAccount:<service-account-email>`)"
   validation {
     condition     = !contains(["allUsers", "allAuthenticatedUsers"], var.invoker)
     error_message = "invoker must not be allUsers or allAuthenticatedUsers — use a specific user or service account"

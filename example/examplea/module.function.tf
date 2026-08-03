@@ -5,11 +5,9 @@ resource "google_project_service" "vpcaccess" {
 }
 
 data "google_vpc_access_connector" "cloudfunction" {
-  project = var.project
+  project = google_project_service.vpcaccess.project
   name    = "cloudfunction-connector"
   region  = var.region
-
-  depends_on = [google_project_service.vpcaccess]
 }
 
 # holden:ignore:HLD_TF_026 — examples intentionally use ../../ to reference the local module root

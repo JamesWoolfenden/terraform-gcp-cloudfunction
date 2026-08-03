@@ -18,4 +18,17 @@ resource "google_storage_bucket" "code" {
   versioning {
     enabled = true
   }
+
+  lifecycle_rule {
+    action {
+      type = "Delete"
+    }
+    condition {
+      age = 90
+    }
+  }
+
+  soft_delete_policy {
+    retention_duration_seconds = 604800
+  }
 }
