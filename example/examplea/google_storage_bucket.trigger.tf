@@ -31,8 +31,8 @@ resource "google_storage_bucket" "trigger" {
     enabled = true
   }
 
-  depends_on =[google_kms_crypto_key_iam_member.cloudfunction_encrypter_decrypter,
-            google_kms_crypto_key_iam_member.gcs_encrypter_decrypter]
+  depends_on = [google_kms_crypto_key_iam_member.cloudfunction_encrypter_decrypter,
+  google_kms_crypto_key_iam_member.gcs_encrypter_decrypter]
 }
 
 # holden:ignore:HLD_GCP_003
@@ -65,7 +65,7 @@ resource "google_storage_bucket" "trigger_logs" {
   }
 
 
-  depends_on =[
+  depends_on = [
     google_kms_crypto_key_iam_member.cloudfunction_encrypter_decrypter,
-    google_kms_crypto_key_iam_member.gcs_encrypter_decrypter]
+  google_kms_crypto_key_iam_member.gcs_encrypter_decrypter]
 }

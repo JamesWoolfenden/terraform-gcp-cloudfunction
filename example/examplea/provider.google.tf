@@ -2,7 +2,7 @@
 # provides equivalent least-privilege without impersonation.
 provider "google" {
   default_labels = {
-    "owner"    = "holden"
+    owner      = "holden"
     module     = "terraform-gcp-cloudfunction"
     created_by = "terraform"
   }
