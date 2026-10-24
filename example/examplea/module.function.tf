@@ -23,4 +23,8 @@ module "function" {
   vpc_connector                 = data.google_vpc_access_connector.cloudfunction.id
   vpc_connector_egress_settings = "ALL_TRAFFIC"
   max_instances                 = 100
+
+  depends_on = [
+    google_kms_crypto_key_iam_member.gcs_encrypter_decrypter
+  ]
 }

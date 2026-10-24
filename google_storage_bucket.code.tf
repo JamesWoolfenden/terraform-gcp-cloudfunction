@@ -1,6 +1,5 @@
 # holden:ignore:HLD_GCP_019 — labels applied via provider default_labels
 resource "google_storage_bucket" "code" {
-  #checkov:skip=CKV_GCP_62
   name                        = "${var.project}-lambdacode-bucket"
   location                    = var.location
   uniform_bucket_level_access = true

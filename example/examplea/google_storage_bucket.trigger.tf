@@ -1,6 +1,5 @@
 # holden:ignore:HLD_GCP_019 — labels applied via provider default_labels
 resource "google_storage_bucket" "trigger" {
-  #checkov:skip=CKV_GCP_62
   name                        = "examplea-function-1"
   uniform_bucket_level_access = true
   location                    = "eu"
@@ -31,11 +30,13 @@ resource "google_storage_bucket" "trigger" {
   versioning {
     enabled = true
   }
+
+  depends_on =[google_kms_crypto_key_iam_member.cloudfunction_encrypter_decrypter,
+            google_kms_crypto_key_iam_member.gcs_encrypter_decrypter]
 }
 
 # holden:ignore:HLD_GCP_003
 resource "google_storage_bucket" "trigger_logs" {
-  #checkov:skip=CKV_GCP_62:logging buckets do not log themselves
   name                        = "examplea-function-1-logs"
   uniform_bucket_level_access = true
   location                    = "eu"
@@ -62,4 +63,9 @@ resource "google_storage_bucket" "trigger_logs" {
   encryption {
     default_kms_key_name = google_kms_crypto_key.cloudfunction.id
   }
+
+
+  depends_on =[
+    google_kms_crypto_key_iam_member.cloudfunction_encrypter_decrypter,
+    google_kms_crypto_key_iam_member.gcs_encrypter_decrypter]
 }

@@ -27,6 +27,13 @@ module cloudfunction {
 
 See **examplea.auto.tfvars** for the data to drive the module.
 
+When using CMEK, grant the Cloud Storage service agent
+`roles/cloudkms.cryptoKeyEncrypterDecrypter` on the key and make the module
+depend on that IAM grant. This ensures the grant exists before the source
+bucket or archive object is created. See
+[examplea/module.function.tf](./example/examplea/module.function.tf) for the
+dependency pattern.
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 

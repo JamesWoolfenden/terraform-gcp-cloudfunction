@@ -3,7 +3,7 @@
 provider "google" {
   default_labels = {
     "owner"    = "holden"
-    model      = "terraform-gcp-cloudfunction"
+    module     = "terraform-gcp-cloudfunction"
     created_by = "terraform"
   }
 }
