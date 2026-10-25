@@ -1,5 +1,6 @@
 policies:
   - .holden/policies
+
 scan_roots:
   - path: .
     targets: [gha]
