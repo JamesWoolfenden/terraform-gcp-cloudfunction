@@ -1,8 +1,7 @@
-# holden:ignore:HLD_GCP_019 — labels applied via provider default_labels
 resource "google_storage_bucket" "trigger" {
   name                        = "examplea-function-1"
   uniform_bucket_level_access = true
-  location                    = "eu"
+  location                    = var.region
   public_access_prevention    = "enforced"
 
   lifecycle_rule {
@@ -35,11 +34,10 @@ resource "google_storage_bucket" "trigger" {
   google_kms_crypto_key_iam_member.gcs_encrypter_decrypter]
 }
 
-# holden:ignore:HLD_GCP_003
 resource "google_storage_bucket" "trigger_logs" {
   name                        = "examplea-function-1-logs"
   uniform_bucket_level_access = true
-  location                    = "eu"
+  location                    = var.region
   public_access_prevention    = "enforced"
 
   lifecycle_rule {

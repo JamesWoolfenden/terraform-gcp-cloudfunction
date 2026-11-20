@@ -1,0 +1,16 @@
+id: LOCAL_GCP_001
+name: Cloud Functions must not use a decommissioned runtime
+principle: patch-management
+severity: MEDIUM
+rationale: |
+  Decommissioned Cloud Functions runtimes (python37/38, nodejs6-16, go111-118,
+  ruby26/27, php73/74, dotnet3) receive no security patches and Google rejects
+  new deployments on them.
+message: |
+  The function uses a decommissioned runtime.
+remediation: |
+  Set runtime to a supported version, e.g. runtime = "python312".
+resources:
+  google_cloudfunctions_function:
+    path: runtime
+    not_matches: "^(python3[78]|nodejs(6|8|10|12|14|16)|go1(11|13|16|18)|ruby2[67]|php7[34]|dotnet3)$"

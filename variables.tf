@@ -1,10 +1,36 @@
-
 variable "lambda" {
-  description = "A map object that populates the majority of cloudfunction settings"
-  type        = map(any)
+  description = "Cloud Function settings. ingress_settings defaults to ALLOW_INTERNAL_AND_GCLB and retry (event trigger failure policy) to false"
+  type = object({
+    available_memory_mb    = number
+    entry_point            = string
+    event_trigger_resource = string
+    event_trigger_type     = string
+    ingress_settings       = optional(string, "ALLOW_INTERNAL_AND_GCLB")
+    name                   = string
+    retry                  = optional(bool, false)
+    runtime                = string
+    service_account_email  = string
+    timeout                = number
+  })
+
   validation {
-    condition     = length(keys(var.lambda)) > 0
-    error_message = "variable 'lambda' must be a non-empty map with at least one key"
+    condition     = contains(["ALLOW_INTERNAL_ONLY", "ALLOW_INTERNAL_AND_GCLB", "ALLOW_ALL"], var.lambda.ingress_settings)
+    error_message = "lambda.ingress_settings must be ALLOW_INTERNAL_ONLY, ALLOW_INTERNAL_AND_GCLB or ALLOW_ALL"
+  }
+
+  validation {
+    condition     = var.lambda.timeout >= 1 && var.lambda.timeout <= 540
+    error_message = "lambda.timeout must be between 1 and 540 seconds"
+  }
+
+  validation {
+    condition     = !can(regex("^(python3[78]|nodejs(6|8|10|12|14|16)|go1(11|13|16|18)|ruby2[67]|php7[34]|dotnet3)$", var.lambda.runtime))
+    error_message = "lambda.runtime is a decommissioned Cloud Functions runtime; use a supported one (e.g. python312)"
+  }
+
+  validation {
+    condition     = length(trimspace(var.lambda.service_account_email)) > 0
+    error_message = "lambda.service_account_email must be set so the function does not run as the default compute service account"
   }
 }
 
@@ -37,11 +63,11 @@ variable "sourcezippath" {
 
 variable "location" {
   type        = string
-  description = "Location of the Cloud Function"
-  default     = "eu"
+  description = "Location of the source code bucket. Defaults to var.region, because the same kms_key_name encrypts the bucket and the function and must live in both locations"
+  default     = null
   validation {
-    condition     = length(trimspace(var.location)) > 0
-    error_message = "variable 'location' must be a non-empty string"
+    condition     = var.location == null || length(trimspace(coalesce(var.location, " "))) > 0
+    error_message = "variable 'location' must be null or a non-empty string"
   }
 }
 
@@ -99,5 +125,25 @@ variable "max_instances" {
   validation {
     condition     = var.max_instances >= 1
     error_message = "max_instances must be >= 1"
+  }
+}
+
+variable "docker_repository" {
+  type        = string
+  description = "Artifact Registry DOCKER repository (projects/PROJECT/locations/REGION/repositories/REPO) encrypted with the same kms_key_name, used to store the function's build image. GCP requires one for CMEK functions"
+  default     = null
+  validation {
+    condition     = var.docker_repository == null || can(regex("^projects/[^/]+/locations/[^/]+/repositories/[^/]+$", coalesce(var.docker_repository, "x")))
+    error_message = "docker_repository must be null or match projects/<project>/locations/<region>/repositories/<repo>"
+  }
+}
+
+variable "bucket_name" {
+  type        = string
+  description = "Name of the source code bucket. Defaults to PROJECT-lambdacode-bucket; set it to deploy more than one instance of this module per project"
+  default     = null
+  validation {
+    condition     = var.bucket_name == null || can(regex("^[a-z0-9][a-z0-9._-]{1,61}[a-z0-9]$", coalesce(var.bucket_name, "x")))
+    error_message = "bucket_name must be null or a valid GCS bucket name"
   }
 }

@@ -1,0 +1,19 @@
+id: LOCAL_GCP_002
+name: CMEK Cloud Functions must set a docker_repository
+principle: encryption
+severity: MEDIUM
+rationale: |
+  A Cloud Function (1st gen) encrypted with a customer-managed key must store its
+  build image in an Artifact Registry repository encrypted with the same key.
+  Without docker_repository the image is outside the CMEK boundary or the deploy fails.
+message: |
+  kms_key_name is set but docker_repository is not.
+remediation: |
+  Set docker_repository to a CMEK-encrypted Artifact Registry DOCKER repository.
+resources:
+  google_cloudfunctions_function:
+    if_present:
+      path: kms_key_name
+      then:
+        path: docker_repository
+        not_null: true

@@ -13,3 +13,9 @@ resource "google_kms_crypto_key_iam_member" "gcs_encrypter_decrypter" {
   member        = "serviceAccount:service-${data.google_project.this.number}@gs-project-accounts.iam.gserviceaccount.com"
   crypto_key_id = google_kms_crypto_key.cloudfunction.id
 }
+
+resource "google_kms_crypto_key_iam_member" "artifactregistry_encrypter_decrypter" {
+  role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+  member        = "serviceAccount:service-${data.google_project.this.number}@gcp-sa-artifactregistry.iam.gserviceaccount.com"
+  crypto_key_id = google_kms_crypto_key.cloudfunction.id
+}

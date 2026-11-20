@@ -62,10 +62,12 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 | ---- | ----------- | ---- | ------- | :------: |
+| <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | Name of the source code bucket. Defaults to PROJECT-lambdacode-bucket; set it to deploy more than one instance of this module per project | `string` | `null` | no |
+| <a name="input_docker_repository"></a> [docker\_repository](#input\_docker\_repository) | Artifact Registry DOCKER repository (projects/PROJECT/locations/REGION/repositories/REPO) encrypted with the same kms\_key\_name, used to store the function's build image. GCP requires one for CMEK functions | `string` | `null` | no |
 | <a name="input_invoker"></a> [invoker](#input\_invoker) | IAM member to grant roles/cloudfunctions.invoker (e.g. `user:<email>` or `serviceAccount:<service-account-email>`) | `string` | n/a | yes |
 | <a name="input_kms_key_name"></a> [kms\_key\_name](#input\_kms\_key\_name) | Full resource ID of the KMS CryptoKey to use for CMEK on the source bucket and Cloud Function | `string` | n/a | yes |
-| <a name="input_lambda"></a> [lambda](#input\_lambda) | A map object that populates the majority of cloudfunction settings | `map(any)` | n/a | yes |
-| <a name="input_location"></a> [location](#input\_location) | Location of the Cloud Function | `string` | `"eu"` | no |
+| <a name="input_lambda"></a> [lambda](#input\_lambda) | Cloud Function settings. ingress\_settings defaults to ALLOW\_INTERNAL\_AND\_GCLB and retry (event trigger failure policy) to false | <pre>object({<br/>    available_memory_mb    = number<br/>    entry_point            = string<br/>    event_trigger_resource = string<br/>    event_trigger_type     = string<br/>    ingress_settings       = optional(string, "ALLOW_INTERNAL_AND_GCLB")<br/>    name                   = string<br/>    retry                  = optional(bool, false)<br/>    runtime                = string<br/>    service_account_email  = string<br/>    timeout                = number<br/>  })</pre> | n/a | yes |
+| <a name="input_location"></a> [location](#input\_location) | Location of the source code bucket. Defaults to var.region, because the same kms\_key\_name encrypts the bucket and the function and must live in both locations | `string` | `null` | no |
 | <a name="input_logging_bucket"></a> [logging\_bucket](#input\_logging\_bucket) | Name of the GCS bucket to write access logs for the source bucket | `string` | n/a | yes |
 | <a name="input_max_instances"></a> [max\_instances](#input\_max\_instances) | Maximum number of concurrent Cloud Function instances; must be >= 1 to prevent unbounded scaling | `number` | `100` | no |
 | <a name="input_project"></a> [project](#input\_project) | GCP project | `string` | n/a | yes |

@@ -1,7 +1,7 @@
 # holden:ignore:HLD_GCP_019 — labels applied via provider default_labels
 resource "google_storage_bucket" "code" {
-  name                        = "${var.project}-lambdacode-bucket"
-  location                    = var.location
+  name                        = coalesce(var.bucket_name, "${var.project}-lambdacode-bucket")
+  location                    = coalesce(var.location, var.region)
   uniform_bucket_level_access = true
   public_access_prevention    = "enforced"
 
@@ -18,12 +18,13 @@ resource "google_storage_bucket" "code" {
     enabled = true
   }
 
+  # Expire only superseded archives; the live archive the function deploys from is kept.
   lifecycle_rule {
     action {
       type = "Delete"
     }
     condition {
-      age = 90
+      days_since_noncurrent_time = 30
     }
   }
 
